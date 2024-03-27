@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/db";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function editSnippet(id: number, code: string) {
@@ -9,6 +10,7 @@ export async function editSnippet(id: number, code: string) {
     data: { code },
   });
 
+  revalidatePath(`/snippets/${id}`);
   redirect(`/snippets/${id}`);
 }
 
@@ -17,21 +19,22 @@ export async function deleteSnippet(id: number) {
     where: { id },
   });
 
+  revalidatePath("/");
   redirect("/");
 }
 
 export async function createSnippet(
   formState: { message: string },
   formData: FormData
-) {
-  // Check the user's inputs and make sure they're valid
-  try {
-    const title = formData.get("title");
-    const code = formData.get("code");
-
-    if (typeof title !== "string" || title.length < 3) {
-      return {
-        message: "Title must be longer",
+  ) {
+    // Check the user's inputs and make sure they're valid
+    try {
+      const title = formData.get("title");
+      const code = formData.get("code");
+      
+      if (typeof title !== "string" || title.length < 3) {
+        return {
+          message: "Title must be longer",
       };
     }
 
@@ -47,7 +50,7 @@ export async function createSnippet(
         code,
       },
     });
-
+    
   } catch (err: unknown) {
     if (err instanceof Error) {
       return {
@@ -60,6 +63,7 @@ export async function createSnippet(
     }
   }
 
+  revalidatePath("/");
   // Redirect the user back to ther root route
   redirect("/");
 }
