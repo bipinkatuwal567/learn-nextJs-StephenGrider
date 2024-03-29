@@ -5,12 +5,11 @@ import React from 'react'
 
 const Profile = () => {
     const session = useSession();
-    console.log(session);
 
     if(session.data?.user){
-        return <div>Signed In</div>
+        return <div>From Client : User is Signed In</div>
     }else{
-        return <div>Signed Out</div>
+        return <div>From Client : User is Signed Out</div>
     }
 }
 
