@@ -12,7 +12,7 @@ const CreateTopicSchema = z.object({
   name: z
     .string()
     .min(3)
-    .regex(/[a-b-]/, {
+    .regex(/a-z-/, {
       message: "Name must be lowercase letter with dash and no any space",
     }),
   description: z.string().min(10),
@@ -30,6 +30,9 @@ export async function createTopic(
   formState: CreateTopicFormState,
   formData: FormData
 ): Promise<CreateTopicFormState> {
+  
+  await new Promise((resolve) => setTimeout(resolve, 2000))
+
   const result = CreateTopicSchema.safeParse({
     name: formData.get("name"),
     description: formData.get("description"),
