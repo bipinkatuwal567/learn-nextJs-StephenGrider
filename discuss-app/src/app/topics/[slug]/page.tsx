@@ -14,7 +14,7 @@ export default function TopicShowPage({params}: TopicShowPageProps) {
         <h2 className="text-xl mb-2 font-semibold">{slug}</h2>
       </div>
       <div className="place-self-end border p-4">
-        <CreatePostForm />
+        <CreatePostForm slug={slug} />
       </div>
     </div>
   );

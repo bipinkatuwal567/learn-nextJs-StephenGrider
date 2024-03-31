@@ -6,15 +6,24 @@ import {
   PopoverContent,
   PopoverTrigger,
   Textarea,
+  divider,
 } from "@nextui-org/react";
 import FormButton from "../common/FormButton";
 import * as actions from "@/actions/index";
 import { useFormState } from "react-dom";
 
-export default function CreatePostForm() {
-  const [formState, action] = useFormState(actions.createPost, {
-    error: {},
-  });
+interface CreatePostFormProps {
+  slug: string;
+}
+
+export default function CreatePostForm({ slug }: CreatePostFormProps) {
+  const [formState, action] = useFormState(
+    actions.createPost.bind(null, slug),
+    {
+      error: {},
+    }
+  );
+
   return (
     <Popover placement="bottom">
       <PopoverTrigger>
@@ -41,6 +50,12 @@ export default function CreatePostForm() {
               labelPlacement="outside"
               placeholder="Write you content here"
             />
+
+            {formState.error._form && (
+              <div className="text-sm text-red-500">
+                {formState.error._form?.join(", ")}
+              </div>
+            )}
             <FormButton>Create</FormButton>
           </div>
         </form>
