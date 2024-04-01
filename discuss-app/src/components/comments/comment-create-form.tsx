@@ -36,7 +36,7 @@ export default function CommentCreateForm({
 
   const form = (
     <form action={action} ref={ref}>
-      <div className="space-y-2 px-1">
+      <div className="space-y-2">
         <Textarea
           name="content"
           label="Reply"
@@ -57,8 +57,13 @@ export default function CommentCreateForm({
   );
 
   return (
-    <div>
-      <Button size="sm" variant="light" onClick={() => setOpen(!open)}>
+    <div className="px-2 flex flex-col gap-4">
+      <Button
+        className=" self-start"
+        size="sm"
+        variant="shadow"
+        onClick={() => setOpen(!open)}
+      >
         Reply
       </Button>
       {open && form}
